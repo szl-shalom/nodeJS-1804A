@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text" placeholder="请输入用户名" class="username">
+    <input type="text" placeholder="请输入密码" class="password">
+    <button class="submit">提交</button>
+
+
+    <script src="./js/ajax.js"></script>
+    <script>
+        let username = document.querySelector(".username"),
+            password = document.querySelector(".password"),
+            submit = document.querySelector(".submit");
+
+        submit.addEventListener("click", () => {
+            // 发送数据  
+            // 方式 get
+            // 请求的路径
+            ajax("get", `/api/login?username=${username.value}&password=${password.value}`)
+                .then(result => {
+                    if (result === "1") {
+                        location.href = "./index.html"
+                    } else {
+                        alert("账号不正确！！！")
+                    }
+                })
+        })
+    </script>
+</body>
+
+</html>

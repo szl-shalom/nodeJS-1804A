@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="active">12</div>
+    <div class="active">233</div>
+    <div class="active">33444</div>
+    <div class="active">444</div>
+    <script>
+        // 获取类名
+        let getDom = className => [...document.querySelectorAll("." + className)]
+        console.log(getDom("active"))
+        // 封装inArray
+        Array.prototype.inArray = function(value){
+           return  this.indexOf(value)
+        }
+        let colors = ["red","green","blue"]
+        console.log(colors.inArray("yellow"))
+        // 
+</script>
+</body>
+
+</html>

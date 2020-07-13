@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="wrap">
+        <div>
+            <input type="text" placeholder="请输入查询名字" class="search">
+            <button class="search_btn">查询</button>
+            <button style="float:right" class="add">新增</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>first</th>
+                    <th>last</th>
+                    <th>name</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1242345234523</td>
+                    <td>first</td>
+                    <td>last</td>
+                    <td>name</td>
+                    <td>
+                        <button>删除</button>
+                        <button>编辑</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="dialog ">
+        <div class="content">
+            <input type="text">
+            <input type="text">
+            <input type="text">
+            <button class="submit">提交</button>
+        </div>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script src="./js/index.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            list-style:none;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>再别康桥</h1>
+    <h2>徐志摩</h2>
+    <ul id="app"></ul>
+    <script src="./js/ajax.js"></script>
+    <script>
+        let app = document.querySelector("#app");
+        // 发送数据
+        ajax("get", "/api/list").then(result => {
+            let arr = result.split("\n")
+            app.innerHTML = arr.map(item=>`<li>${item}</li>`).join("")
+        })
+    </script>
+</body>
+
+</html>

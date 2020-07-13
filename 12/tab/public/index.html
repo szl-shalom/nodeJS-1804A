@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <link rel="stylesheet" href="./css/swiper.css">
+    <script src="./js/swiper.js"></script>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="header">
+            <h1>淘票票</h1>
+        </div>
+        <div class="menu">
+            <span>item1</span>
+            <span>item2</span>
+            <span>item3</span>
+            <span>item4</span>
+        </div>
+        <div class="content">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <dl>
+                            <dt>
+                                <div class="img"></div>
+                            </dt>
+                            <dd>
+                                <p>标题</p>
+                                <p>描述信息</p>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="./js/axios.js"></script>
+    <script>
+        let menu = document.querySelector(".menu"),
+            el = document.querySelector(".swiper-wrapper");
+
+        axios.get("/api/list").then(result => {
+            let list = result.data.list; //后台返回的数据
+            // 标题渲染  使用三元表达式设置默认高亮
+            menu.innerHTML = list.map((item, index) =>
+                `<span class=${index===0?"active":""}>${item.name}</span>`).join("")
+            // 内容渲染,
+            let str = ""; // 拼接内容字符串
+            list.forEach(item => {
+                str += `<div class="swiper-slide">`
+                item.children.forEach(item => {
+                    str += `
+                    <dl>
+                            <dt>
+                                <div class="img" style="background:${item.color}"></div>
+                            </dt>
+                            <dd>
+                                <p>${item.title}</p>
+                                <p>${item.desc}</p>
+                            </dd>
+                    </dl>
+                    `
+                })
+                str += ` </div>`
+
+
+            })
+
+            // 渲染内容
+            el.innerHTML = str;
+            
+            let s = new Swiper(".swiper-container", {
+                on: {
+                    slideChange() {
+                        menu.children[this.previousIndex].classList.remove("active");
+                        menu.children[this.activeIndex].classList.add("active");
+                    }
+                }
+            });
+
+            [...menu.children].forEach((item, index) => {
+                item.addEventListener("click", () => {
+                    s.slideTo(index)
+                })
+            })
+        })
+    </script>
+</body>
+
+</html>

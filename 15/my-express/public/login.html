@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <input type="text">
+    <button>登录</button>
+    <script src="./js/axios.js"></script>
+    <script>
+        let ipts = document.querySelectorAll("input");
+        document.querySelector("button").addEventListener("click", () => {
+            axios.post("/api/login", {
+                username: ipts[0].value,
+                password: ipts[1].value,
+            }).then(result => {
+                console.log(result)
+            })
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        let say = time => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve("执行了" + time)
+                }, time)
+            })
+        }
+
+        // 链式调用
+        // say(1000).then(result => {
+        //     console.log(result)
+        //     return say(2000)
+        // }).then(result => {
+        //     console.log(result)
+        // })
+
+
+        // 1、async 异步函数 
+        // await 等待异步的结果  一般后面是一个promise对象  当初语法resovle时候,继续往后执行
+        // await 只能出现在async函数内部
+        // 作用:让异步的代码看起来像是同步的代码
+        async function fun() {
+            let p0 = await 123;
+            console.log(p0)
+            let p1 = await say(3000)
+            console.log(p1)
+            let p2 = await say(1000)
+            console.log(p2)
+        }
+        // fun()
+        // 2、generator 函数
+        // 2、此函数在调用上不会立即执行，执行的结果返回一个对象  
+        //    返回出来的对象原型上有一个next函数,想要往下执行的需要调用next函数
+        //    当调用next函数的时候，只会向后匹配一个yield,会等待运行
+        //    next 函数执行的结果  { value: yield的返回 ,done: 布尔值（执行完毕true 其他false） }
+        function* f() {
+            yield 1
+            yield 2
+        
+        }
+        let res = f();
+        
+        let res1 = res.next();
+        console.log(res1)
+
+
+        let res2 = res.next()
+        console.log(res2)
+
+        let res3 = res.next()
+        console.log(res3)
+        // console.log(res)
+    </script>
+
+</body>
+
+</html>

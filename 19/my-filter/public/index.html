@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <input type="text">
+    <ul>
+
+    </ul>
+    <script src="./js/axios.js"></script>
+    <script>
+        let input = document.querySelector("input"),
+            ul = document.querySelector("ul");
+        input.addEventListener("input", () => {
+            render()
+
+        })
+        render()
+
+
+        function render() {
+            // 发送
+            axios.get("/api/filter", {
+                params: {
+                    // 模糊搜索的内容
+                    name: input.value,
+                }
+            }).then(result => {
+                // 搜索完毕 渲染
+                ul.innerHTML = result.data.map(item =>
+                    `<li>姓名${item.name}---id:${item.id}</li>`).join(
+                    "")
+            })
+        }
+    </script>
+</body>
+
+</html>

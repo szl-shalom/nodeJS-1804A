@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            width: 100%;
+            text-align: center;
+            border-collapse: collapse;
+        }
+
+        table tr {
+            height: 30px;
+            ;
+        }
+    </style>
+</head>
+
+<body>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>序号</th>
+                <th>用户名</th>
+                <th>密码</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>1</td>
+                <td>张三</td>
+                <td>123123</td>
+                <td>
+                    <b>删除</b>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="./js/axios.js"></script>
+    <script>
+        let tbody = document.querySelector("tbody");
+        // 获取数据 + 渲染
+        render()
+        // 添加事件
+        addEvent();
+
+
+        function addEvent() {
+            tbody.addEventListener("click", e => {
+                let tar = e.target;
+                if (tar.className === "del") {
+                    axios.delete("/api/data/del", {
+                        // 发送delelte
+                        data:{
+                            id:tar.id
+                        }
+                    }).then(result=>{
+                        let { code } = result.data;
+                        if(code){
+                            // 删除爷爷
+                            // tar.parentNode.parentNode.remove();
+
+                            render()
+                        }
+                    })
+                }
+            })
+        }
+
+
+        function render() {
+            // 请求数据
+            axios.get("/api/data").then(result => {
+                // 渲染
+                tbody.innerHTML = result.data.map((item, index) => {
+                    return `
+                    <tr>
+                        <td>${index+1}</td>
+                        <td>${item.username}</td>
+                        <td>${item.password}</td>
+                        <td>
+                            <b class="del" id="${item.id}">删除</b>
+                        </td>
+                    </tr>
+                    `
+                }).join("")
+
+            })
+        }
+    </script>
+</body>
+
+</html>

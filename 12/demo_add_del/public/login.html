@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <div class="dialog">
+        <p>
+            <input type="text" class="username" placeholder="请输入用户名">
+        </p>
+        <p>
+            <input type="text" class="password" placeholder="请输入密码">
+
+        </p>
+        <button class="login">登录</button>
+
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let username = document.querySelector(".username"),
+            password = document.querySelector(".password"),
+            login = document.querySelector(".login");
+        // 登录点击事件
+        login.addEventListener("click", () => {
+            // 获取用户名字和密码
+            let userVal = username.value,
+                pwdVal = password.value;
+            // 发送请求
+            axios.get(`/api/login?username=${userVal}&password=${pwdVal}`).then(result => {
+                if (result.data === 1) {
+                    location.href = "./index.html";
+                } else {
+                    alert("账户密码错误")
+                }
+
+            })
+
+        })
+    </script>
+</body>
+
+</html>

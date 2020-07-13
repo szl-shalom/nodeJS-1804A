@@ -1,0 +1,56 @@
+*{
+    margin: 0;
+    padding:0;
+}
+.wrap{
+    width:800px;
+    margin: auto;
+}
+table{
+    width:100%;
+    text-align: center;
+}
+table thead{
+    background: #f2f2f2;
+}
+
+table td{
+    border-bottom: 1px solid #ccc;
+}
+table tr{
+    height: 46px;
+}
+
+
+.dialog {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+    display: none;
+
+}
+.dialog.active{
+    display: block;
+}
+
+.content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    background: white;
+    display: flex;
+    flex-direction: column;
+}
+
+.content input,
+.content button {
+    width: 360px;
+    border: 1px solid #ccc;
+    margin: 10px 0;
+    height: 46px;
+}

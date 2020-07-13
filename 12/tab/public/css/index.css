@@ -1,0 +1,33 @@
+.wrap{
+    width:500px;
+    margin: auto;
+    border: 1px solid #ccc;
+}
+h1{
+    text-align: center;
+}
+.menu{
+    height:46px;
+    background: tomato;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.menu span.active{
+    color:white
+}
+
+dl{
+    padding:20px;
+    display: flex;
+}
+dt {
+    width:120px;
+    height:180px;
+}
+dt .img{
+    width:100%;
+    height: 100%;
+    background: tomato;
+}

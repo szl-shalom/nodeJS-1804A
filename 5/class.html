@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 类
+        // class 通过 class 新建一个类（构造函数）
+        // 类 必须包含 constructor函数   1、接受实参  2、会自动执行
+        // 类 上面的方法 都是原型方法  
+        // 类 添加静态属性或方法  需要static前缀
+        class Person {
+            // 构造器
+            constructor(name) {
+                this.name = name
+                this.init();
+            }
+            // 原型方法
+            init() {
+                console.log(123)
+            }
+            addEvent(){
+                
+            }
+            // 静态属性
+            static a = 1;
+            // 静态方法
+            static ff() {
+
+            }
+        }
+        let p1 = new Person("张三")
+        console.log(p1)
+    </script>
+</body>
+
+</html>

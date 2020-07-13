@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        table {
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <input type="text" placeholder="请输入标题"><br>
+        <input type="text" placeholder="请输入发布人"><br>
+        <input type="date" placeholder="请选择时间"><br>
+        <button>提交</button>
+    </div>
+
+    <div class="content">
+        <table>
+            <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>标题</th>
+                    <th>发布人</th>
+                    <th>时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="./js/axios.js"></script>
+    <script>
+        let tbody = document.querySelector("tbody"),
+            btn = document.querySelector("button"),
+            ipts = [...document.querySelectorAll("input")];
+        // 请求数据+渲染
+        render()
+        // 添加数据
+        add()
+        // 删除数据
+        del();
+
+        function del() {
+            tbody.addEventListener("click", (e) => {
+                // 获取事件源
+                let tar = e.target;
+                // 判断类名是不是del
+                if (tar.className === "del") {
+                    // 条件成立 删除
+                    axios.get("/api/list/del", {
+                        params: {
+                            id: tar.id //事件源 id
+                        }
+                    }).then(result => {
+                        if (result.data.code) {
+                            alert(result.data.mess);
+                            render()
+                        }
+                    })
+                }
+            })
+        }
+
+        function add() {
+            // 添加事件
+            btn.addEventListener("click", () => {
+                // 发送数据  get方式  
+                axios.get("/api/list/add", {
+                    // 使用get发送数据  需要使用params
+                    // 数据格式需要和你本地数据格式保持一致
+                    params: {
+                        "title": ipts[0].value,
+                        "name": ipts[1].value,
+                        "time": ipts[2].value,
+                        "id": Math.random().toString().slice(2),
+                    }
+                }).then(result => {
+                    if (result.data.code) {
+                        alert(result.data.mess);
+                        render()
+                    }
+                })
+            })
+        }
+
+        function render() {
+            axios.get("/api/list").then(result => {
+                let list = result.data.list;
+                tbody.innerHTML = list.map((item, index) => {
+                    return `
+                <tr>
+                    <td>${index+1}</td>
+                    <td>${item.title}</td>
+                    <td>${item.name}</td>
+                    <td>${item.time}</td>
+                    <td>
+                        <b class="del" id="${item.id}">删除</b>
+                        <b>编辑</b>
+                    </td>
+                </tr>
+                `
+                }).join("")
+            })
+        }
+    </script>
+</body>
+
+</html>

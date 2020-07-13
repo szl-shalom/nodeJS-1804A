@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+</head>
+
+<body>
+    <button class="add">新增</button>
+    <input type="text" placeholder="请输入姓名" class="search">
+    <table>
+        <thead>
+            <tr>
+                <th>负责人</th>
+                <th>电子邮箱</th>
+                <th>手机号</th>
+                <th>客户名称</th>
+                <th>姓名</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>负责人</td>
+                <td>电子邮箱</td>
+                <td>手机号</td>
+                <td>客户名称</td>
+                <td>姓名</td>
+                <td>操作</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <div class="dialog">
+        <div class="content">
+            <input type="text" placeholder="请输入负责人">
+            <input type="text" placeholder="请输入邮箱">
+            <input type="text" placeholder="请输入电话">
+            <input type="text" placeholder="请输入客户姓名">
+            <input type="text" placeholder="请输入姓名">
+            <button class="submit">提交</button>
+        </div>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let tbody = document.querySelector("tbody"),
+            add = document.querySelector(".add"),
+            dialog = document.querySelector(".dialog"),
+            submit = document.querySelector(".submit"),
+            ipts = [...document.querySelectorAll(".content input")],
+            search = document.querySelector(".search")
+
+        render();
+        renderDialog();
+        filter();
+
+
+        function filter() {
+            search.addEventListener("input", () => {
+                axios.post("/api/people/filter", {
+                        val: search.value,
+                    })
+                    .then(result => {
+                        renderContent(result.data)
+                    })
+            })
+        }
+
+        function renderDialog() {
+            add.addEventListener("click", () => {
+                dialog.classList.add("active")
+            })
+
+            submit.addEventListener("click", () => {
+                axios.post("/api/people/add", {
+                    "name": ipts[0].value,
+                    "tel": ipts[1].value,
+                    "email": ipts[2].value,
+                    "k_name": ipts[3].value,
+                    "f_name": ipts[4].value
+                }).then(result => {
+                    render();
+                    dialog.classList.remove("active")
+                })
+            })
+        }
+
+        function render() {
+            axios.get("/api/people").then(result => {
+                renderContent(result.data)
+            })
+        }
+
+        function renderContent(data) {
+            tbody.innerHTML = data.map(item => {
+                return `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.email}</td>
+                        <td>${item.tel}</td>
+                        <td>${item.k_name}</td>
+                        <td>${item.f_name}</td>
+                        <td>
+                            <b>删除</b>
+                            </td>
+                    </tr>       
+                    `
+            }).join("")
+        }
+    </script>
+</body>
+
+</html>

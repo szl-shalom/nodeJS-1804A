@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <script src="./js/axios.js"></script>
+</head>
+
+<body>
+    <div class="login">
+        <input type="text" placeholder="请输入账户" class="username">
+        <input type="text" placeholder="请输入密码" class="password">
+        <button class="btn">登录</button>
+        <button class="register">注册</button>
+    </div>
+    <script>
+        let username = document.querySelector(".username"),
+            password = document.querySelector(".password"),
+            btn = document.querySelector(".btn"),
+            register = document.querySelector(".register");
+
+        // 注册
+        register.addEventListener("click", () => {
+            let obj = {
+                username: username.value,
+                password: password.value
+            }
+            axios.post("/api/register", obj).then(result => {
+                if (result.data === 1) {
+                    alert("注册成功")
+                } else {
+                    alert("注册失败")
+
+                }
+            })
+        })
+
+
+        // 登录点击事件
+        btn.addEventListener("click", () => {
+            let obj = {
+                username: username.value,
+                password: password.value
+            }
+            console.log(obj)
+            axios.post(`/api/login`, obj).then(result => {
+                if (result.data === 1) {
+                    location.href = "./home.html"
+                } else {
+                    alert(`登录失败`)
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>

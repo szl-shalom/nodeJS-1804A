@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title .active {
+            color: red
+        }
+
+        .con {
+            display: none;
+        }
+
+        .con.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="title">
+            <span>标题1</span>
+            <span class="active">标题2</span>
+            <span>标题3</span>
+        </div>
+        <div class="content">
+            <div class="con">内容1</div>
+            <div class="con active">内容2</div>
+            <div class="con">内容3</div>
+        </div>
+    </div>
+
+    <script>
+        class Tab {
+            constructor(obj) {
+                Object.assign(this, obj); //合拼参数
+                this.init(); //初始化
+            }
+            init() {
+                // 添加事件
+                this.addEvent();
+            }
+            addEvent() {
+                // 获取标题下所有子元素  循环遍历
+                [...this.title.children].forEach((item, index) => {
+                    // 绑定事件
+                    item.addEventListener("click", () => {
+                        // 去除原来的高亮
+                        this.title.querySelector(".active").classList.remove("active")
+                        // 添加高亮
+                        item.classList.add("active")
+                        // 去除内容盒子高亮
+                        this.content.querySelector(".active").classList.remove("active")
+                        // 添加内容盒子高亮
+                        this.content.children[index].classList.add("active")
+                    })
+
+                })
+            }
+        }
+
+        new Tab({
+            title: document.querySelector(".title"),
+            content: document.querySelector(".content")
+        })
+    </script>
+</body>
+
+</html>

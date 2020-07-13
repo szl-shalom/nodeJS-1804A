@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <ul>
+
+    </ul>
+    <script src="./JS/axios.js"></script>
+    <script>
+        let ul = document.querySelector("ul");
+
+        function get() {
+            axios.get("/api/list").then(result => {
+                console.log(result)
+                let list = result.data;
+                ul.innerHTML = list.map(item => `<li>标题：${item.title}--- 单价:${item.price}----<b>删除</b></li>`)
+                    .join("");
+                let bs = [...document.querySelectorAll("b")];
+                bs.forEach((item, index) => {
+                    item.addEventListener("click", () => {
+                        axios.get(`/api/del?index=${index}`).then(res => {
+                            history.go(0)
+                        })
+                    })
+                })
+            })
+        }
+        get();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Document</title>
+    <style>
+        .login {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        input,
+        button {
+            height: 46px;
+            margin: 10px 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <h1>请登录</h1>
+        <input type="text" placeholder="请输入账户" class="username">
+        <input type="text" placeholder="请输入密码" class="password">
+        <input type="text" placeholder="请输入验证码" class="code">
+        <button class="getCode">获取验证码</button>
+        <button class="submit">登录</button>
+    </div>
+    <script src="./js/axios.js"></script>
+    <script>
+        let username = document.querySelector(".username"),
+            password = document.querySelector(".password"),
+            submit = document.querySelector(".submit"),
+            getCode = document.querySelector(".getCode"),
+            code = document.querySelector(".code");
+
+        getCode.addEventListener("click", () => {
+            axios.get("/api/getCode")
+        })
+
+
+        submit.addEventListener("click", () => {
+            axios.post("/api/login", {
+                username: username.value,
+                password: password.value,
+                code: code.value
+            }).then(result => {
+                let {
+                    code,
+                    mess
+                } = result.data;
+
+                switch (code) {
+                    case 0:
+                        alert(mess)
+                        break;
+                    case 1:
+                        alert(mess)
+                        location.href = "index.html"
+                        break
+                    case 2:
+                        alert(mess)
+                }
+            })
+        })
+    </script>
+</body>
+
+</html>
